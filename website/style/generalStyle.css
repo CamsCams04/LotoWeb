@@ -5,6 +5,11 @@
 }
 
 
+header{
+    height: auto;
+}
+
+
 #home{
     background: url("../../asset/fond/fondAcceuil.png") no-repeat fixed top left;
     background-position: center ;
@@ -22,7 +27,7 @@ body{
     font-family: 'wedges', sans-serif, basic;
 }
 
-main {
+.mainPrinc {
     margin: 0;
     padding: 0;
 
@@ -43,6 +48,8 @@ button{
     font-family: 'wedges', sans-serif, basic;
     font-size: 33px;
 
+    margin-bottom: 20px;
+
     border-radius: 50px;
     padding: 10px 20px;
 
@@ -62,4 +69,10 @@ button:not(#choosers button):hover{
     box-shadow: 0px 15px 20px rgba(46, 229, 175, 0.4);
     color: white;
     transform: translateY(-7px);
+}
+
+#logoRetour{
+    margin-top: 10px;
+    margin-left: 10px;
+    max-width: 50px;
 }
