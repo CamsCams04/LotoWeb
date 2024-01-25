@@ -1,0 +1,65 @@
+/* for specific font-styles */
+@font-face {
+    font-family: 'wedges';
+    src: url('../../font/Wedges.ttf');
+}
+
+
+#home{
+    background: url("../../asset/fond/fondAcceuil.png") no-repeat fixed top left;
+    background-position: center ;
+    background-size: cover;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+
+    background: url("../../asset/fond/fondPP.png") no-repeat fixed top left;
+    background-position: center ;
+    background-size: cover;
+
+    font-family: 'wedges', sans-serif, basic;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    align-self: flex-start;
+    justify-content: flex-start;
+}
+
+h1{
+    margin-top: 0;
+    font-size: 150px;
+}
+
+button{
+    font-family: 'wedges', sans-serif, basic;
+    font-size: 33px;
+
+    border-radius: 50px;
+    padding: 10px 20px;
+
+    min-width: 200px;
+    background-color: #39979B;
+    border: none;
+
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+button:not(#choosers button):hover{
+    background-color: #1e6062;
+    box-shadow: 0px 15px 20px rgba(46, 229, 175, 0.4);
+    color: white;
+    transform: translateY(-7px);
+}
