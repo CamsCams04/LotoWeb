@@ -1,0 +1,39 @@
+input{
+    font-family: 'wedges', sans-serif, basic;
+    font-size: 20px;
+
+    max-width: 150px;
+
+    border-radius: 50px;
+    padding: 10px 20px;
+
+
+    background-color: #39979B;
+    border: none;
+
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+
+}
+
+#check{
+    width: auto;
+    padding: 0 15px;
+}
+
+select{
+    margin: 10px 10px;
+    font-family: 'wedges', sans-serif, basic;
+    font-size: 20px;
+
+    border-radius: 50px;
+    border: none;
+    background: #39969a;
+}
+
+section{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
