@@ -25,7 +25,7 @@ createGrid(10, 9);
 const gridItems = document.querySelectorAll('.grid-item');
 
 
-/*gridItems.forEach(gridItem => {
+gridItems.forEach(gridItem => {
     gridItem.addEventListener('click', () => {
         const clickedDivId = gridItem.id;
 
@@ -42,7 +42,9 @@ const gridItems = document.querySelectorAll('.grid-item');
         spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
         spanTextBouleTiree.innerText = localStorage.numBoule.substring(3);
     });
-});*/
+});
+
+
 
 
 // création de la div de droite
@@ -125,33 +127,6 @@ divRigth.appendChild(sectionBouleTiree);
 divRigth.appendChild(buttonFin);
 
 
-const intervalID = setInterval(() => {
-    const nombre = tireBoule();
-
-    const clickedDivId = 'div' + nombre;
-
-    let clickedDiv = document.getElementById(clickedDivId);
-
-    console.log('Div cliquée :', clickedDivId);
-    clickedDiv.style.background = '#39969a';
-
-    if (localStorage.numBoule === 'none') {
-        localStorage.setItem('ancienneBoule', '');
-    } else {
-        localStorage.setItem('ancienneBoule', localStorage.numBoule);
-    }
-    localStorage.setItem('numBoule', nombre);
-    spanTextBoule.innerText = localStorage.ancienneBoule;
-    spanTextBouleTiree.innerText = localStorage.numBoule;
-}, 5000);
-
-buttonFin.addEventListener('click', () => {
-    clearInterval(intervalID);
-});
-
-
-
-
 /* création de la grille de jeu*/
 
 function createGrid(rows, cols) {
@@ -185,9 +160,4 @@ function createGrid(rows, cols) {
     }
 
     divLeft.appendChild(container);
-}
-
-function tireBoule (){
-    const nombreAleatoire = Math.floor(Math.random()*90)+1;
-    return nombreAleatoire;
 }
