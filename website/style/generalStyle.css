@@ -80,3 +80,8 @@ button:not(#choosers button):hover{
     margin-left: 10px;
     max-width: 50px;
 }
+
+h2{
+    text-align: center;
+    margin: 0;
+}
