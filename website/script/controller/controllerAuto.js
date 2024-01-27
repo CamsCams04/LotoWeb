@@ -29,11 +29,18 @@ gridItems.forEach(gridItem => {
     gridItem.addEventListener('click', () => {
         const clickedDivId = gridItem.id;
 
-        clickedDiv = document.getElementById(clickedDivId);
+        let clickedDiv = document.getElementById(clickedDivId);
 
         console.log('Div cliquée :', clickedDivId);
         clickedDiv.style.background = '#39969a';
-
+        if (localStorage.numBoule === 'none'){
+            localStorage.setItem('ancienneBoule', 'div');
+        }else{
+            localStorage.setItem('ancienneBoule', localStorage.numBoule);
+        }
+        localStorage.setItem('numBoule', clickedDivId);
+        spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
+        spanTextBouleTiree.innerText = localStorage.numBoule.substring(3);
     });
 });
 
@@ -67,7 +74,8 @@ sectionBoule.style.flexDirection = 'column';
 sectionBoule.style.position = 'relative';
 sectionBoule.style.alignItems = 'center';
 
-spanTextBoule.innerText = '13';
+
+//spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
 spanTextBoule.style.fontSize = '30px';
 spanTextBoule.style.position = 'absolute';
 spanTextBoule.style.top = '50%';
@@ -82,7 +90,7 @@ sectionBouleTiree.style.flexDirection = 'column';
 sectionBouleTiree.style.alignItems = 'center';
 sectionBouleTiree.style.position = 'relative';
 
-spanTextBouleTiree.innerText = '12';
+//spanTextBouleTiree.innerText = '12';
 spanTextBouleTiree.style.fontSize = '40px';
 spanTextBouleTiree.style.position = 'absolute';
 spanTextBouleTiree.style.top = '50%';
