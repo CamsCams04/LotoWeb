@@ -7,6 +7,7 @@
     <link rel="icon"       href="../../asset/elements/tourne.png">
     <link rel="stylesheet" href="../style/generalStyle.css">
     <link rel="stylesheet" href="../style/divStyle.css">
+    <link rel="stylesheet" href="../style/choiceStyle.css">
 
 </head>
 <body>
@@ -16,15 +17,30 @@
     <main>
         <section>
             <div>
+                <p>
+                    Ici, nous allons définir vos partie de jeu.
+                    Pour cela, vous devrez tout d'abord sélectionner le nombre de partie que vous voudrez faire.
+                    Ensuite, sur la droite, il faudra que vous définissiez chaque partie une par une sachant que :
+                    <li>Une quine : une ligne sur le carton</li>
+                    <li>Double quine : deux ligne sur le même carton</li>
+                    <li>une partie est composé de 3 sous-parties</li>
+                    <li>démarquer signifie de retirer tout les jetons du cartons.</li>
+                </p>
 
+                <p>Maintenant à vous de jouer !</p>
+
+                <p>Conmbien de partie voulez-vous faire ?</p>
+
+                <input type="text" id="nbPartie" name="nbPartie">
+                <button id="check" type="submit">✓</button>
             </div>
-            <div>
+            <div id="div-right">
 
             </div>
         </section>
-        <button type="submit">commencer</button>
+        <button class="but" type="submit" id="commencer">commencer</button>
 
     </main>
-
+    <script src="../script/controller/controllerDefPartie.js"></script>
 </body>
 </html>
