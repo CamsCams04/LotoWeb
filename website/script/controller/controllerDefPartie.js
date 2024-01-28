@@ -98,7 +98,7 @@ buttonbPartie.addEventListener('click', () => {
         }
 
         localStorage.setItem('values', JSON.stringify(values));
-        localStorage.setItem('selectedSubPartValue', subPartValues);
+        localStorage.setItem('selectedSubPartValue', JSON.stringify(subPartValues));
 
 
         if (localStorage.Mode === 'auto'){
