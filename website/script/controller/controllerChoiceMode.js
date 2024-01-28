@@ -2,6 +2,7 @@ const buttonAuto = document.getElementById('buttonAuto');
 const buttonManuel =document.getElementById('buttonManuel');
 localStorage.setItem('numBoule', 'none');
 localStorage.setItem('ancienneBoule', '');
+
 buttonAuto.addEventListener('click', () => {
     localStorage.setItem('Mode', 'auto');
     localStorage.setItem('Partie', '0');

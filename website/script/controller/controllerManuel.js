@@ -1,9 +1,11 @@
+import {Alert} from "../entities/Alert.js";
+
 const titre = document.getElementById('titre');
 const divLeft = document.getElementById('div-left');
 const divRigth = document.getElementById('div-right');
 
 const valuesPartie = JSON.parse(localStorage.getItem('values'));
-const valuesDemarque = localStorage.getItem('selectedSubPartValue');
+const valuesDemarque = JSON.parse(localStorage.getItem('selectedSubPartValue'));
 
 const nbPartie = localStorage.nbPartie;
 
@@ -11,12 +13,12 @@ divRigth.style.height = '80vh';
 divLeft.style.height = '80vh';
 
 console.log(valuesPartie);
-
+console.log(valuesDemarque)
 
 // création de la div de gauche
 
-let i = 0;
-let j = 0;
+let i = parseInt(localStorage.Partie);
+let j = parseInt(localStorage.SousPartie);
 
 titre.innerText = 'Partie ' + (i+1) + ' : ' + valuesPartie[i][j];
 
@@ -127,6 +129,26 @@ divRigth.appendChild(sectionBouleTiree);
 divRigth.appendChild(buttonFin);
 
 
+buttonFin.addEventListener('click', () => {
+    let sousPartieString = valuesDemarque[i];
+    const sousPartie = parseInt(sousPartieString.substring(sousPartieString.indexOf(' ')+1));
+    console.log(valuesDemarque[i]);
+    console.log(sousPartie);
+    console.log(j+1);
+    if(sousPartie === j+1){
+        demarquerGrille();
+        const newAlert = new Alert("C'est l'heure de démarquer !",'Continuer','','demarque');
+        newAlert.customAlert();
+        document.addEventListener('continueAfterDemarquage', () => {
+            continuerApresDemarquage();
+        });
+
+    }
+    else{
+        afficherFelicitation();
+    }
+});
+
 /* création de la grille de jeu*/
 
 function createGrid(rows, cols) {
@@ -160,4 +182,43 @@ function createGrid(rows, cols) {
     }
 
     divLeft.appendChild(container);
+}
+
+function afficherFelicitation() {
+    let i = parseInt(localStorage.Partie)
+    let j = parseInt(localStorage.SousPartie);
+    if (i === nbPartie-1 && j === 2){
+        const newAlert = new Alert("Félicitation aux gagnants ! Le jeu est fini merci d'avoir joué !",'Fermer', '../../index.html', 'fin');
+        newAlert.customAlert();
+    } else {
+        if(j === 2){
+            localStorage.setItem('SousPartie', '0');
+            localStorage.setItem('Partie', ''+(i+1));
+            j=0;
+            const newAlert = new Alert('Félicitation au gagnant !','Continuer', 'manuel.html', 'fin');
+            newAlert.customAlert();
+            demarquerGrille();
+        } else {
+            localStorage.setItem('SousPartie', ''+(j+1));
+            const newAlert = new Alert('Félicitation au gagnant !','Continuer', null, 'fin');
+            newAlert.customAlert();
+        }
+
+        i = parseInt(localStorage.Partie);
+        j = parseInt(localStorage.SousPartie);
+    }
+
+
+    titre.innerText = 'Partie ' + (i+1) + ' : ' + valuesPartie[i][j];
+}
+
+function continuerApresDemarquage() {
+    afficherFelicitation();
+}
+
+function demarquerGrille() {
+    const gridItems = document.querySelectorAll('.grid-item');
+    gridItems.forEach(gridItem => {
+        gridItem.style.background = '';
+    });
 }
