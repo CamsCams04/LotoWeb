@@ -1,9 +1,11 @@
+import {Alert}  from "../entities/Alert.js";
+
 const titre = document.getElementById('titre');
 const divLeft = document.getElementById('div-left');
 const divRigth = document.getElementById('div-right');
 
 const valuesPartie = JSON.parse(localStorage.getItem('values'));
-const valuesDemarque = localStorage.getItem('selectedSubPartValue');
+const valuesDemarque = JSON.parse(localStorage.getItem('selectedSubPartValue'));
 
 const nbPartie = localStorage.nbPartie;
 
@@ -11,12 +13,14 @@ divRigth.style.height = '80vh';
 divLeft.style.height = '80vh';
 
 console.log(valuesPartie);
+console.log(valuesDemarque);
 
 
 // création de la div de gauche
 
-let i = 0;
-let j = 0;
+let i = parseInt(localStorage.Partie);
+let j = parseInt(localStorage.SousPartie);
+
 
 titre.innerText = 'Partie ' + (i+1) + ' : ' + valuesPartie[i][j];
 
@@ -54,6 +58,7 @@ const imgBoule = document.createElement('img');     // boule actuellement tirée
 const spanTextBoule = document.createElement('span');
 const spanTextBouleTiree = document.createElement('span');
 const buttonFin = document.createElement('button');
+const buttonPause = document.createElement('button');
 
 // section de la dernière boule tirée en haut à droite
 
@@ -109,6 +114,10 @@ imgBoule.style.width = '200px';
 buttonFin.innerText = 'Fin partie';
 buttonFin.style.marginTop = '20px';
 
+buttonPause.innerText = 'Pause';
+buttonPause.style.marginTop = '20px';
+buttonPause.style.marginLeft = '10px';
+
 sectionBoule.appendChild(pMessage);
 sectionBoule.appendChild(imgDerBoule);
 sectionBoule.appendChild(spanTextBoule);
@@ -123,30 +132,40 @@ sectionImg.appendChild(sectionBoule);
 divRigth.appendChild(sectionBouleTiree);
 
 divRigth.appendChild(buttonFin);
+divRigth.appendChild(buttonPause);
 
+let isPaused = false;
 
-const intervalID = setInterval(() => {
-    const nombre = tireBoule();
-
-    const clickedDivId = 'div' + nombre;
-
-    let clickedDiv = document.getElementById(clickedDivId);
-
-    console.log('Div cliquée :', clickedDivId);
-    clickedDiv.style.background = '#39969a';
-
-    if (localStorage.numBoule === 'none') {
-        localStorage.setItem('ancienneBoule', '');
-    } else {
-        localStorage.setItem('ancienneBoule', localStorage.numBoule);
+buttonPause.addEventListener('click', () => {
+    if(isPaused){
+        intervalID = setInterval(intervalFunction, 2000);
+        buttonPause.innerText = 'Pause';
+    }else{
+        clearInterval(intervalID);
+        buttonPause.innerText = 'Reprendre';
     }
-    localStorage.setItem('numBoule', nombre);
-    spanTextBoule.innerText = localStorage.ancienneBoule;
-    spanTextBouleTiree.innerText = localStorage.numBoule;
-}, 5000);
+    isPaused = !isPaused;
+});
+
+let intervalID = setInterval(intervalFunction, 2000);
 
 buttonFin.addEventListener('click', () => {
     clearInterval(intervalID);
+    let sousPartieString = valuesDemarque[i];
+    const sousPartie = parseInt(sousPartieString.substring(sousPartieString.indexOf(' ')+1));
+    console.log(valuesDemarque[i]);
+    if(parseInt(valuesDemarque[i].substring(11)) === j+1){
+        demarquerGrille();
+        const newAlert = new Alert("C'est l'heure de démarquer !",'Continuer','','demarque');
+        newAlert.customAlert();
+        document.addEventListener('continueAfterDemarquage', () => {
+            continuerApresDemarquage();
+        });
+
+    }
+    else{
+        afficherFelicitation();
+    }
 });
 
 
@@ -190,4 +209,51 @@ function createGrid(rows, cols) {
 function tireBoule (){
     const nombreAleatoire = Math.floor(Math.random()*90)+1;
     return nombreAleatoire;
+}
+
+function intervalFunction(){
+    const nombre = tireBoule();
+
+    const clickedDivId = 'div' + nombre;
+
+    let clickedDiv = document.getElementById(clickedDivId);
+
+    console.log('Div cliquée :', clickedDivId);
+    clickedDiv.style.background = '#39969a';
+
+    if (localStorage.numBoule === 'none') {
+        localStorage.setItem('ancienneBoule', '');
+    } else {
+        localStorage.setItem('ancienneBoule', localStorage.numBoule);
+    }
+    localStorage.setItem('numBoule', nombre);
+    spanTextBoule.innerText = localStorage.ancienneBoule;
+    spanTextBouleTiree.innerText = localStorage.numBoule;
+}
+
+function demarquerGrille() {
+    const gridItems = document.querySelectorAll('.grid-item');
+    gridItems.forEach(gridItem => {
+        gridItem.style.background = '';
+    });
+}
+
+function afficherFelicitation() {
+    if (i === nbPartie-1 && j === 2){
+        const newAlert = new Alert("Félicitation au gagnant ! Le jeu est fini merci d'avoir joué !",'Fermer', '../../index.html', 'fin');
+        newAlert.customAlert();
+    } else {
+        if(j+1 === 3){
+            localStorage.setItem('SousPartie', '0');
+            localStorage.setItem('Partie', (i+1));
+        } else {
+            localStorage.setItem('SousPartie', (j+1));
+        }
+        const newAlert = new Alert('Félicitation au gagnant !','Continuer', 'automatique.html', 'fin');
+        newAlert.customAlert();
+    }
+}
+
+function continuerApresDemarquage() {
+    afficherFelicitation();
 }
