@@ -29,26 +29,6 @@ createGrid(10, 9);
 const gridItems = document.querySelectorAll('.grid-item');
 
 
-/*gridItems.forEach(gridItem => {
-    gridItem.addEventListener('click', () => {
-        const clickedDivId = gridItem.id;
-
-        let clickedDiv = document.getElementById(clickedDivId);
-
-        console.log('Div cliquée :', clickedDivId);
-        clickedDiv.style.background = '#39969a';
-        if (localStorage.numBoule === 'none'){
-            localStorage.setItem('ancienneBoule', 'div');
-        }else{
-            localStorage.setItem('ancienneBoule', localStorage.numBoule);
-        }
-        localStorage.setItem('numBoule', clickedDivId);
-        spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
-        spanTextBouleTiree.innerText = localStorage.numBoule.substring(3);
-    });
-});*/
-
-
 // création de la div de droite
 
 const sectionImg = document.createElement('section');
@@ -239,6 +219,8 @@ function demarquerGrille() {
 }
 
 function afficherFelicitation() {
+    let i = parseInt(localStorage.Partie)
+    let j = parseInt(localStorage.SousPartie);
     if (i === nbPartie-1 && j === 2){
         const newAlert = new Alert("Félicitation au gagnant ! Le jeu est fini merci d'avoir joué !",'Fermer', '../../index.html', 'fin');
         newAlert.customAlert();
@@ -246,11 +228,16 @@ function afficherFelicitation() {
         if(j+1 === 3){
             localStorage.setItem('SousPartie', '0');
             localStorage.setItem('Partie', (i+1));
+            j=0;
+            const newAlert = new Alert('Félicitation au gagnant !','Continuer', 'automatique.html', 'fin');
+            newAlert.customAlert();
         } else {
             localStorage.setItem('SousPartie', (j+1));
+            const newAlert = new Alert('Félicitation au gagnant !','Continuer', null, 'fin');
+            newAlert.customAlert();
+            setInterval(intervalFunction, 2000);
         }
-        const newAlert = new Alert('Félicitation au gagnant !','Continuer', 'automatique.html', 'fin');
-        newAlert.customAlert();
+
     }
 }
 
