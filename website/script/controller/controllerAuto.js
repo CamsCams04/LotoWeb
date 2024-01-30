@@ -9,6 +9,8 @@ const valuesDemarque = JSON.parse(localStorage.getItem('selectedSubPartValue'));
 
 const nbPartie = localStorage.nbPartie;
 
+const nombreTire = [];
+
 divRigth.style.height = '80vh';
 divLeft.style.height = '80vh';
 
@@ -25,8 +27,6 @@ let j = parseInt(localStorage.SousPartie);
 titre.innerText = 'Partie ' + (i+1) + ' : ' + valuesPartie[i][j];
 
 createGrid(10, 9);
-
-const gridItems = document.querySelectorAll('.grid-item');
 
 
 /*gridItems.forEach(gridItem => {
@@ -207,12 +207,17 @@ function createGrid(rows, cols) {
 }
 
 function tireBoule (){
-    const nombreAleatoire = Math.floor(Math.random()*90)+1;
+    let nombreAleatoire = Math.floor(Math.random()*90)+1;
+    while(nombreTire.includes(nombreAleatoire)){
+        nombreAleatoire = Math.floor(Math.random()*90)+1;
+    }
     return nombreAleatoire;
 }
 
 function intervalFunction(){
     const nombre = tireBoule();
+
+    nombreTire.push(nombre);
 
     const clickedDivId = 'div' + nombre;
 
