@@ -9,6 +9,8 @@ const valuesDemarque = JSON.parse(localStorage.getItem('selectedSubPartValue'));
 
 const nbPartie = localStorage.nbPartie;
 
+let nombreTire = [];
+
 divRigth.style.height = '80vh';
 divLeft.style.height = '80vh';
 
@@ -34,15 +36,52 @@ gridItems.forEach(gridItem => {
         let clickedDiv = document.getElementById(clickedDivId);
 
         console.log('Div cliquée :', clickedDivId);
-        clickedDiv.style.background = '#39969a';
-        if (localStorage.numBoule === 'none'){
-            localStorage.setItem('ancienneBoule', 'div');
+        console.log(clickedDiv.style.background);
+
+        // deselection
+        if(clickedDiv.style.background === 'rgb(57, 150, 154)'){
+            clickedDiv.style.background = '#ffffff';
+            if (localStorage.numBoule !== clickedDivId){
+                if(localStorage.ancienneBoule !== clickedDivId){
+                    const indNum = nombreTire.indexOf(clickedDivId.substring(3));
+                    nombreTire.splice(indNum, 1);
+                }else{
+                    const indNum = nombreTire.indexOf(clickedDivId.substring(3));
+                    nombreTire.splice(indNum, 1);
+                    localStorage.setItem('ancienneBoule', 'div' + nombreTire[nombreTire.length - 2]);
+                }
+
+            }else {
+                if (nombreTire.length === 1) {
+                    localStorage.setItem('ancienneBoule', 'div');
+                    localStorage.setItem('numBoule', 'div');
+                } else if (nombreTire.length === 2) {
+                    localStorage.setItem('ancienneBoule', 'div');
+                    localStorage.setItem('numBoule', 'div' + nombreTire[0]);
+                    nombreTire.pop();
+                } else {
+                    localStorage.setItem('ancienneBoule', 'div' + nombreTire[nombreTire.length - 3]);
+                    localStorage.setItem('numBoule', 'div' + nombreTire[nombreTire.length - 2]);
+                    nombreTire.pop();
+                }
+            }
+            console.log(localStorage.ancienneBoule);
+            spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
+            spanTextBouleTiree.innerText = localStorage.numBoule.substring(3);
         }else{
-            localStorage.setItem('ancienneBoule', localStorage.numBoule);
+            clickedDiv.style.background = '#39969a';
+            if (localStorage.numBoule === 'none'){
+                localStorage.setItem('ancienneBoule', 'div');
+            }else{
+                localStorage.setItem('ancienneBoule', localStorage.numBoule);
+            }
+            localStorage.setItem('numBoule', clickedDivId);
+            nombreTire.push(localStorage.numBoule.substring(3));
+            spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
+            spanTextBouleTiree.innerText = localStorage.numBoule.substring(3);
         }
-        localStorage.setItem('numBoule', clickedDivId);
-        spanTextBoule.innerText = localStorage.ancienneBoule.substring(3);
-        spanTextBouleTiree.innerText = localStorage.numBoule.substring(3);
+        console.log(nombreTire);
+
     });
 });
 
