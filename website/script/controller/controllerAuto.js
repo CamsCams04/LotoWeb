@@ -116,6 +116,18 @@ divRigth.appendChild(buttonPause);
 
 let isPaused = false;
 
+document.addEventListener('keydown', (e) => {
+    if (e.keyCode === 179){
+        if(isPaused){
+            intervalID = setInterval(intervalFunction, 2000);
+            buttonPause.innerText = 'Pause';
+        }else{
+            clearInterval(intervalID);
+            buttonPause.innerText = 'Reprendre';
+        }
+        isPaused = !isPaused;
+    }
+})
 buttonPause.addEventListener('click', () => {
     if(isPaused){
         intervalID = setInterval(intervalFunction, 2000);
