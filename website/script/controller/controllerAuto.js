@@ -208,6 +208,10 @@ function createGrid(rows, cols) {
 
 function tireBoule (){
     let nombreAleatoire = Math.floor(Math.random()*90)+1;
+    if (nombreTire.length === 90){
+        console.log('salut');
+        return 0;
+    }
     while(nombreTire.includes(nombreAleatoire)){
         nombreAleatoire = Math.floor(Math.random()*90)+1;
     }
@@ -217,23 +221,28 @@ function tireBoule (){
 function intervalFunction(){
     const nombre = tireBoule();
 
-    nombreTire.push(nombre);
-
-    const clickedDivId = 'div' + nombre;
-
-    let clickedDiv = document.getElementById(clickedDivId);
-
-    console.log('Div cliquée :', clickedDivId);
-    clickedDiv.style.background = '#39969a';
-
-    if (localStorage.numBoule === 'none') {
-        localStorage.setItem('ancienneBoule', '');
-    } else {
-        localStorage.setItem('ancienneBoule', localStorage.numBoule);
+    if (nombre === 0){
+        const alert = new Alert('Fin partie !','Continuer', 'automatique.html', 'fin');
     }
-    localStorage.setItem('numBoule', nombre);
-    spanTextBoule.innerText = localStorage.ancienneBoule;
-    spanTextBouleTiree.innerText = localStorage.numBoule;
+    else {
+        nombreTire.push(nombre);
+
+        const clickedDivId = 'div' + nombre;
+
+        let clickedDiv = document.getElementById(clickedDivId);
+
+        console.log('Div cliquée :', clickedDivId);
+        clickedDiv.style.background = '#39969a';
+
+        if (localStorage.numBoule === 'none') {
+            localStorage.setItem('ancienneBoule', '');
+        } else {
+            localStorage.setItem('ancienneBoule', localStorage.numBoule);
+        }
+        localStorage.setItem('numBoule', nombre);
+        spanTextBoule.innerText = localStorage.ancienneBoule;
+        spanTextBouleTiree.innerText = localStorage.numBoule;
+    }
 }
 
 function demarquerGrille() {
