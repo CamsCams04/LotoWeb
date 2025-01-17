@@ -16,6 +16,7 @@ buttonbPartie.addEventListener('click', () => {
     if(nbPartie !== ''){
         for(let i = 0; i<nbPartie; i++){
             const titre = document.createElement('p');
+            titre.classList.add('title_game');
             titre.innerText = 'Partie ' + (i+1) + ' :';
             div.appendChild(titre);
 
@@ -43,25 +44,38 @@ buttonbPartie.addEventListener('click', () => {
             }
             const secDem = document.createElement('section');
             secDem.id = 'demarque' + i;
+            secDem.classList.add("section_demarque");
 
             const demarque = document.createElement('p');
             demarque.innerText = 'quand faut-il demarquer ?';
+            const div_select_demarque = document.createElement('div');
+            div_select_demarque.id = 'div_select_demarque'
 
-            const selectDemarque = document.createElement('select');
-            const optSSP1 = document.createElement('option');
-            const optSSP2 = document.createElement('option');
-            const optSSP3 = document.createElement('option');
+            for(let j=0; j<3; j++){
+                const labelDemarque = document.createElement('label');
+                labelDemarque.innerText = `Sous-partie ${j +1}`;
+                const selectDemarque = document.createElement('select');
+                const optSSP1 = document.createElement('option');
+                const optSSP2 = document.createElement('option');
 
-            optSSP1.innerText = 'sous-partie 1';
-            optSSP2.innerText = 'sous-partie 2';
-            optSSP3.innerText = 'sous-partie 3';
+                optSSP1.innerText = 'oui';
+                optSSP2.innerText = 'non';
+                
+                selectDemarque.id =`selectDemarque${i}-${j}`;
+                const input_group = document.createElement('div');
+                input_group.className = "div_input_group";
 
+                input_group.appendChild(labelDemarque);
+                input_group.appendChild(selectDemarque);
+                
+                div_select_demarque.appendChild(input_group);
+
+                selectDemarque.appendChild(optSSP1);
+                selectDemarque.appendChild(optSSP2);
+            }
             div.appendChild(secDem);
             secDem.appendChild(demarque);
-            secDem.appendChild(selectDemarque);
-            selectDemarque.appendChild(optSSP1);
-            selectDemarque.appendChild(optSSP2);
-            selectDemarque.appendChild(optSSP3);
+            secDem.appendChild(div_select_demarque);
         }
         const buttonAppli = document.createElement('button');
         buttonAppli.innerText = 'appliquer à toutes';
@@ -74,16 +88,20 @@ buttonbPartie.addEventListener('click', () => {
                 const select = document.getElementById('partie0-' + j);
                 values.push(select.value);
             }
-            const selectDem = document.querySelector('#demarque0 select');
 
+            const selectDem = [];
+            for(let j = 0; j<3; j++){
+                const select = document.getElementById('selectDemarque0-' + j);
+                selectDem.push(select.value);
+            }
 
             for(let i = 1; i<nbPartie; i++ ){
                 for(let j = 0; j<3; j++){
                     const select = document.getElementById('partie' + i + '-' + j);
                     select.value = values[j];
+                    const selectDemRemp = document.getElementById(`selectDemarque${i}-${j}`);
+                    selectDemRemp.value = selectDem[j];
                 }
-                const selectDemRemp = document.querySelector('#demarque' + i + ' select');
-                selectDemRemp.value = selectDem.value;
             }
 
         });
@@ -94,13 +112,16 @@ buttonbPartie.addEventListener('click', () => {
 
             for(let i = 0; i<nbPartie; i++ ) {
                 const val = [];
+                const demVal = [];
+                const divDem = document.querySelector('#demarque' + i);
                 for (let j = 0; j < 3; j++) {
                     const select = document.getElementById('partie' + i + '-' + j);
                     val.push(select.value);
+                    const demSelect = divDem.querySelector(`#selectDemarque${i}-${j}`);
+                    demVal.push(demSelect.value)
                 }
                 values.push(val);
-                const selectDemar = document.querySelector('#demarque' + i + ' select');
-                subPartValues.push(selectDemar.value);
+                subPartValues.push(demVal);
             }
 
             localStorage.setItem('values', JSON.stringify(values));

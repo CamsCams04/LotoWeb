@@ -169,23 +169,30 @@ divRigth.appendChild(buttonFin);
 
 
 buttonFin.addEventListener('click', () => {
-    let sousPartieString = valuesDemarque[i];
-    const sousPartie = parseInt(sousPartieString.substring(sousPartieString.indexOf(' ')+1));
-    console.log(valuesDemarque[i]);
+    const sousPartie = valuesDemarque[i][j];
     console.log(sousPartie);
-    console.log(j+1);
-    if(sousPartie === j+1){
+    if(sousPartie === 'oui'){
         demarquerGrille();
         const newAlert = new Alert("C'est l'heure de démarquer !",'Continuer','','demarque');
         newAlert.customAlert();
-        document.addEventListener('continueAfterDemarquage', () => {
-            continuerApresDemarquage();
-        });
-
     }
-    else{
-        afficherFelicitation();
-    }
+    afficherFelicitation();
+    // let sousPartieString = valuesDemarque[i][j];
+    // // const sousPartie = parseInt(sousPartieString.substring(sousPartieString.indexOf(' ')+1));
+    // const sousPartie = sousPartieString;
+    // console.log(sousPartie);
+    // if(sousPartie === 'oui'){
+    //     demarquerGrille();
+    //     const newAlert = new Alert("C'est l'heure de démarquer !",'Continuer','','demarque');
+    //     newAlert.customAlert();
+    //     // document.addEventListener('continueAfterDemarquage', () => {
+    //     //     continuerApresDemarquage();
+    //     // });
+    //     continuerApresDemarquage();
+    // }
+    // // else if (j === 2) {
+    // //     afficherFelicitation();
+    // // }
 });
 
 /* création de la grille de jeu*/
@@ -227,8 +234,8 @@ function afficherFelicitation() {
     let i = parseInt(localStorage.Partie)
     let j = parseInt(localStorage.SousPartie);
     if (i === nbPartie-1 && j === 2){
-        const newAlert = new Alert("Félicitation aux gagnants ! Le jeu est fini merci d'avoir joué !",'Fermer', '../../index.html', 'fin');
-        newAlert.customAlert();
+        // const newAlert = new Alert("Félicitation aux gagnants ! Le jeu est fini merci d'avoir joué !",'Fermer', '../../index.html', 'fin');
+        // newAlert.customAlert();
     } else {
         if(j === 2){
             localStorage.setItem('SousPartie', '0');
